@@ -1,0 +1,61 @@
+Question: https://leetcode.com/problems/implement-stack-using-queues/description/
+-----------------------------------------------------------------------------------------
+Solution:
+
+
+type MyStack struct {
+    q []int
+}
+
+
+func Constructor() MyStack {
+    return MyStack{
+        q : []int{},
+    }
+}
+
+
+func (this *MyStack) Push(x int)  {
+    this.q = append(this.q, x)
+}
+
+
+func (this *MyStack) Pop() int {
+    n := len(this.q)
+    for i:=0;i<n-1;i++{
+        front := this.q[0]
+        this.q = append(this.q[1:],front)
+    }
+
+    top := this.q[0]
+    this.q = this.q[1:]
+    return top
+}
+
+
+func (this *MyStack) Top() int {
+    n := len(this.q)
+    for i:=0;i<n-1;i++{
+        front := this.q[0]
+        this.q = append(this.q[1:],front)
+    }
+
+    top := this.q[0]
+    this.q = append(this.q[1:],top)
+    return top
+}
+
+
+func (this *MyStack) Empty() bool {
+    return len(this.q) == 0
+}
+
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Push(x);
+ * param_2 := obj.Pop();
+ * param_3 := obj.Top();
+ * param_4 := obj.Empty();
+ */
