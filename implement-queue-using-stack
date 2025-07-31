@@ -1,0 +1,65 @@
+type MyQueue struct {
+    S1 []int
+    S2 []int
+}
+
+
+func Constructor() MyQueue {
+    return MyQueue{
+        S1: []int{},
+        S2: []int{},
+    }
+}
+
+
+func (this *MyQueue) Push(x int)  {
+    this.S1 = append(this.S1,x)
+}
+
+
+func (this *MyQueue) Pop() int {
+    if len(this.S2) > 0 {
+        top := this.S2[len(this.S2)-1]
+        this.S2 = this.S2[:len(this.S2)-1]
+        return top
+    }
+
+    for i:=len(this.S1)-1;i>=0;i--{
+        this.S2 = append(this.S2,this.S1[i])
+    }
+
+    this.S1 = []int{}
+    top := this.S2[len(this.S2)-1]
+    this.S2 = this.S2[:len(this.S2)-1]
+    return top
+}
+
+
+func (this *MyQueue) Peek() int {
+    if len(this.S2) > 0 {
+        return this.S2[len(this.S2)-1]
+    }
+
+    for i:=len(this.S1)-1;i>=0;i--{
+        this.S2 = append(this.S2,this.S1[i])
+    }
+
+    this.S1 = []int{}
+
+    return this.S2[len(this.S2)-1]
+}
+
+
+func (this *MyQueue) Empty() bool {
+    return len(this.S1)==0 && len(this.S2)==0
+}
+
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Push(x);
+ * param_2 := obj.Pop();
+ * param_3 := obj.Peek();
+ * param_4 := obj.Empty();
+ */
