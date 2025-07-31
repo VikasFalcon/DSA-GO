@@ -1,0 +1,30 @@
+func isValid(s string) bool {
+    var stack []string
+
+    hashMap := map[string]string{
+        "(":")",
+        "{":"}",
+        "[":"]",
+    }
+
+    for i:=0;i<len(s);i++{
+        val := string(s[i])
+        _,ok:=hashMap[val]
+        if ok {
+            stack = append(stack,val)
+        }else{
+            if len(stack) <= 0 {
+                return false
+            }
+
+            top := stack[len(stack)-1]
+            stack = stack[:len(stack)-1]
+            mapVal, mapOK := hashMap[top]
+            if mapOK && mapVal != val {
+                return false
+            }
+        }
+    }
+
+    return len(stack) == 0
+}
