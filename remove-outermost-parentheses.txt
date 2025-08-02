@@ -1,0 +1,43 @@
+// With Stack
+func removeOuterParentheses(s string) string {
+    var stack []string
+    var result string
+    for i:=0;i<len(s);i++{
+        if string(s[i]) == "(" {
+            // PUSH
+            stack = append(stack,string(s[i]))
+            if len(stack) > 1 {
+                result += string(s[i])
+            }
+        }else{
+            if len(stack) > 1{
+                result += string(s[i])
+            }
+            // POP
+            stack = stack[:len(stack)-1]
+        }
+    }
+
+    return result
+}
+
+Without Stack
+func removeOuterParentheses(s string) string {
+    var length int
+    var result string
+    for i:=0;i<len(s);i++{
+        if string(s[i]) == "(" {
+            length++
+            if length > 1 {
+                result += string(s[i])
+            }
+        }else{
+            if length > 1{
+                result += string(s[i])
+            }
+            length--
+        }
+    }
+
+    return result
+}
