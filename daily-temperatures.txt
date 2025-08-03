@@ -1,0 +1,36 @@
+func dailyTemperatures(temperatures []int) []int {
+    temp := temperatures
+    var ansStack []int
+    var stack []int
+
+    ansStack = append(ansStack,0)
+    stack = append(stack,len(temp)-1)
+
+    for i := len(temp)-2;i>=0;i--{
+        if temp[i+1] > temp[i]{
+            ansStack = append(ansStack, (i+1)-i)
+        } else{
+            for len(stack) > 0 && temp[stack[len(stack)-1]] <= temp[i] {
+                stack = stack[:len(stack)-1]
+            }
+
+            if len(stack) == 0 {
+                ansStack = append(ansStack,0)
+            } else {
+                ansStack = append(ansStack, stack[len(stack)-1]-i)
+            }
+        }   
+
+        stack = append(stack, i)
+        
+    }
+
+    var result []int
+    if len(ansStack) > 0 {
+        for k:=len(ansStack)-1;k>=0;k--{
+            result = append(result,ansStack[k])
+        }
+    }
+
+    return result
+}
