@@ -1,0 +1,38 @@
+func searchRange(nums []int, target int) []int {
+    l:=0;
+    r:=len(nums)-1
+    result:=[]int{-1,-1}
+
+    if len(nums)==0{
+        return result
+    }
+    
+    for l<r{
+        m:=l+(r-l)/2
+        if nums[m] < target{
+            l=m+1
+        }else{
+            r=m
+        }
+    }
+
+    if nums[l] == target{
+        result[0] = l
+    }
+    l=0
+    r=len(nums)-1
+    for l < r{
+        m:=l+(r-l+1)/2
+        if nums[m] > target{
+            r=m-1
+        }else{
+            l=m
+        }
+    }
+
+    if nums[r]==target{
+        result[1] = r
+    }
+
+    return result
+}
