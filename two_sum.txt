@@ -1,0 +1,16 @@
+func twoSum(nums []int, target int) []int {
+    hashMap := make(map[int]int)
+
+    for i,val := range nums{
+        hashMap[val] = i
+    }
+
+    for j,val := range nums{
+        pairToFind := target - val
+        k,ok := hashMap[pairToFind]
+        if ok && j!=k {
+            return []int{j,k}
+        }
+    }
+    return []int{}
+}
