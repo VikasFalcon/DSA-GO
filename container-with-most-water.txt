@@ -1,0 +1,27 @@
+// Solved using 2 pointer approched
+// Time Complexity O(n)
+// Space Complexity O(1)
+func maxArea(height []int) int {
+    l:=0
+    r:=len(height)-1
+    maxArea := 0
+    for l < r{
+        width := r - l
+        var minHeight int
+        if height[l] <= height[r]{
+            minHeight = height[l] 
+            l++
+        }else{
+            minHeight = height[r]
+            r--
+        }
+
+        area := minHeight * width
+        if area > maxArea {
+            maxArea = area
+        }
+
+    }
+
+    return maxArea
+}
