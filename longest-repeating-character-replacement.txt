@@ -1,0 +1,36 @@
+// Sliding window problem
+// Time Complexity O(n2) Space Complexity O(n)
+
+func characterReplacement(s string, k int) int {
+    i,j:=0,0
+    hashMap:=make(map[byte]int)
+    maxLength:=0
+    for j < len(s){
+        hashMap[s[j]]++
+        if isValidWindow(hashMap,k){
+            currCount := j-i+1
+            if currCount > maxLength {
+                maxLength = currCount
+            } 
+        }else{
+            hashMap[s[i]]--
+            i++
+        }
+        j++
+    }
+
+    return maxLength
+}
+
+func isValidWindow(hashMap map[byte]int,k int) bool {
+    totalCount := 0
+    maxCount := 0
+    for _,val:=range hashMap{
+        if val > maxCount {
+            maxCount = val
+        }
+        totalCount += val
+    }
+
+    return totalCount - maxCount <= k
+}
