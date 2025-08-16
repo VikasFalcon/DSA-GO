@@ -1,0 +1,26 @@
+// Sliding window problem
+// Time Complexity O(n)
+// Space Complexity O(m) or O(1) - because string would only consists of English letters, digits, symbols and spaces and which has fixed space
+
+func lengthOfLongestSubstring(s string) int {
+    if len(s) <= 0 {
+        return 0
+    }
+    i:=0
+    hashMap := make(map[byte]int)
+    maxWS:=0
+    for j:=0;j<len(s);j++{
+        index, ok := hashMap[s[j]]
+        if ok && index >= i {
+            i = index + 1
+        }
+
+        hashMap[s[j]] =j
+        currWS := (j-i)+1
+        if currWS > maxWS {
+            maxWS = currWS
+        }
+    }
+
+    return maxWS
+}
