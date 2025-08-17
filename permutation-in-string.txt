@@ -1,0 +1,50 @@
+// Sliding window problem
+// Time Complexity O(n) = O(len(s1)+len(s2))
+// Space Complexity O(26+26) = O(52) = O(1)
+
+func checkInclusion(s1 string, s2 string) bool {
+    if len(s1) > len(s2){
+        return false
+    }
+
+    hashMapS1:=make(map[byte]int)
+    hashMapS2:=make(map[byte]int)
+    
+    for s:='a';s<='z';s++{
+        hashMapS1[byte(s)]=0
+        hashMapS2[byte(s)]=0
+    }
+
+    for k:=0;k<len(s1);k++{
+        hashMapS1[s1[k]]++
+        hashMapS2[s2[k]]++
+    }
+
+    i:=0
+    j:=len(s1)-1
+
+    for i < len(s2){
+        if hashValidate(hashMapS1,hashMapS2) {
+            return true
+        }else{
+            hashMapS2[s2[i]]--
+            i++
+            j++
+            if j < len(s2){
+                hashMapS2[s2[j]]++
+            }
+        }
+    }
+
+    return false
+}
+
+func hashValidate(hashMapS1,hashMapS2 map[byte]int) bool {
+    for key, valS1 := range hashMapS1{
+        valS2, ok := hashMapS2[key]
+        if ok && valS1!=valS2{
+            return false
+        }
+    }
+    return true
+}
