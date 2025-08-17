@@ -1,0 +1,39 @@
+// Below solution will work but in worst case it will throw timeout error 
+// E.g  len(nums) = 10000 and k=5000  - it will throw timeout and it is not optimised solution
+
+
+func maxSlidingWindow(nums []int, k int) []int {
+    if k==1{
+        return nums
+    }
+
+    var ans []int
+    refMax:=0
+    for i:=0;i<=len(nums)-k;i++{
+        j:=i+k-1
+        if i==0{
+            refMax = getMaxNo(nums[i:i+k])
+        }else {
+            if nums[j] > refMax{
+                refMax = nums[j]
+            }else if nums[i-1] == refMax{
+                refMax = getMaxNo(nums[i:i+k])
+            }
+        }
+        ans = append(ans,refMax)
+    }
+
+    return ans
+}
+
+func getMaxNo(windowArr []int) int{
+    maxCount:=windowArr[0]
+    for _,val:=range windowArr{
+        if val > maxCount{
+            maxCount = val
+        }
+    }
+    return maxCount
+}
+
+==========================================================================================================
