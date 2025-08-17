@@ -37,3 +37,30 @@ func getMaxNo(windowArr []int) int{
 }
 
 ==========================================================================================================
+
+More Optimised Solution:
+Using queue (dequeue)
+Time and Space Complexity:  O(n)
+
+func maxSlidingWindow(nums []int, k int) []int {
+    var ans []int
+    var queue []int
+    i,j:=0,0
+    for j < len(nums){
+        for len(queue) > 0 && nums[j] > queue[len(queue)-1]{
+            queue = queue[:len(queue)-1]
+        }
+        queue = append(queue,nums[j])
+
+        if j >= k-1{
+            ans  = append(ans,queue[0])
+            if nums[i] == queue[0] {
+                queue = queue[1:]
+            }
+            i++
+        }
+        j++
+    }
+
+    return ans
+}
