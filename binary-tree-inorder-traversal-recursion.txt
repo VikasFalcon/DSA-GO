@@ -6,6 +6,9 @@
  *     Right *TreeNode
  * }
  */
+// This is the solution using recursion
+
+
 func inorderTraversal(root *TreeNode) []int {
     var ans []int
 
