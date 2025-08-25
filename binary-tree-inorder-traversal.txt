@@ -1,0 +1,24 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func inorderTraversal(root *TreeNode) []int {
+    var ans []int
+
+    var binaryRecursion func(*TreeNode)
+    binaryRecursion = func(curr *TreeNode){
+        if curr == nil {
+            return
+        }
+        binaryRecursion(curr.Left)
+        ans = append(ans,curr.Val)
+        binaryRecursion(curr.Right)
+    }
+    binaryRecursion(root)
+
+    return ans
+}
