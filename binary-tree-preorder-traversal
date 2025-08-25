@@ -1,0 +1,29 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+
+// binaryReccursion := func(curr *TreeNode){..}  this will not work because,
+// Go doesn't allow an anonymous function to recursively call itself unless it has already been defined.
+func preorderTraversal(root *TreeNode) []int {
+    var ans []int
+
+    var binaryReccursion func(*TreeNode) // Declare the variable first
+    binaryReccursion = func(curr *TreeNode){
+        if curr == nil { 
+            return 
+        } 
+        
+        ans = append(ans,curr.Val)
+        binaryReccursion(curr.Left)
+        binaryReccursion(curr.Right)
+    }
+
+    binaryReccursion(root)
+
+    return ans
+}
