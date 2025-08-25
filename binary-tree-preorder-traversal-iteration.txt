@@ -1,0 +1,34 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+
+// This one is iterative approch code
+
+func preorderTraversal(root *TreeNode) []int {
+    if root == nil{
+        return []int{}
+    }
+    var ans []int
+    // Initialised stack with root
+    stack := []*TreeNode{root}
+    for len(stack)>0{
+        curr := stack[len(stack)-1] // fetch the top element
+        stack = stack[:len(stack)-1] // POP top element from stack
+        
+        ans = append(ans,curr.Val)
+        if curr.Right != nil{
+            stack = append(stack, curr.Right) // PUSH right first
+        }
+
+        if curr.Left != nil{    
+            stack = append(stack, curr.Left)  // then PUSH left
+        }    
+    } 
+
+    return ans
+}
