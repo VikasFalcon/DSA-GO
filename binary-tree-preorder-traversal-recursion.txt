@@ -7,6 +7,8 @@
  * }
  */
 
+// This is the solution using recursion
+
 // binaryReccursion := func(curr *TreeNode){..}  this will not work because,
 // Go doesn't allow an anonymous function to recursively call itself unless it has already been defined.
 func preorderTraversal(root *TreeNode) []int {
