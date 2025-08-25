@@ -6,6 +6,10 @@
  *     Right *TreeNode
  * }
  */
+
+// This is the solution using recursion
+
+
 func postorderTraversal(root *TreeNode) []int {
     var ans []int
 
