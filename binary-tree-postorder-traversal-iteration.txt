@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func postorderTraversal(root *TreeNode) []int {
+    if root == nil {
+        return []int{}
+    }
+
+    stack1 := []*TreeNode{root}
+    stack2 := []int{}
+
+    for len(stack1)>0{
+        curr := stack1[len(stack1)-1]
+        stack1 = stack1[:len(stack1)-1]
+
+        stack2 = append(stack2,curr.Val)
+
+        if curr.Left!=nil{
+            stack1 = append(stack1,curr.Left)
+        }
+
+        if curr.Right!=nil{    
+            stack1 = append(stack1,curr.Right)
+        }    
+    }
+
+    // Reverse the answer slice
+    var ans []int
+    for len(stack2)>0{
+        elem := stack2[len(stack2)-1]
+        stack2 = stack2[:len(stack2)-1]
+        ans = append(ans,elem)
+    }
+
+    return ans
+}
