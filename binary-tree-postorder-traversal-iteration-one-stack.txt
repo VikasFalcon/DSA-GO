@@ -1,0 +1,32 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func postorderTraversal(root *TreeNode) []int {
+    curr := root
+    var stack []*TreeNode
+    var ans []int
+    var lastVisited *TreeNode
+
+    for curr != nil || len(stack)>0{
+        for curr != nil {
+            stack = append(stack,curr)
+            curr = curr.Left
+        }
+
+        peek := stack[len(stack)-1]
+        if peek.Right != nil && peek.Right != lastVisited{
+            curr = peek.Right
+        }else{
+            ans = append(ans,peek.Val)
+            lastVisited = peek
+            stack = stack[:len(stack)-1]
+        }
+    }
+
+    return ans
+}
