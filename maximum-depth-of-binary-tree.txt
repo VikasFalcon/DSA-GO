@@ -1,0 +1,30 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func maxDepth(root *TreeNode) int {
+    if root == nil {
+        return 0
+    }
+    maxDepth:=0
+    var traversal func(curr *TreeNode,level int)
+    traversal = func(curr *TreeNode, level int){
+        if level > maxDepth{
+            maxDepth = level
+        }
+
+        if curr.Left != nil{
+            traversal(curr.Left,level+1)
+        }
+
+        if curr.Right != nil{    
+            traversal(curr.Right,level+1)
+        }    
+    }
+    traversal(root,1)
+    return maxDepth
+}
