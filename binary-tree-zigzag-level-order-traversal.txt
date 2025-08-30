@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func zigzagLevelOrder(root *TreeNode) [][]int {
+    if root == nil {
+        return [][]int{}
+    }
+    var ans [][]int
+    queue := []*TreeNode{root}
+    level := 0
+    for len(queue)>0{
+        var levelSlice []int
+        levelLength := len(queue)
+        for i:=0;i<levelLength;i++{
+            curr := queue[0]
+            queue = queue[1:]
+
+            if level%2 == 0 {
+                levelSlice = append(levelSlice,curr.Val)
+            } else {
+                levelSlice = append([]int{curr.Val},levelSlice...)
+            }
+
+            if curr.Left != nil{
+                queue = append(queue,curr.Left)
+            }
+
+            if curr.Right != nil{    
+                queue = append(queue,curr.Right)
+            }    
+        } 
+        ans = append(ans,levelSlice)
+        level++
+    }
+    return ans
+}
