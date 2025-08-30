@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func isBalanced(root *TreeNode) bool {
+    ans := true
+    var findDepth func(curr *TreeNode) int
+    findDepth = func(curr *TreeNode) int {
+        if curr == nil {
+            return 0
+        }
+
+        leftDepth := findDepth(curr.Left)
+        rightDepth := findDepth(curr.Right)
+
+        depthDiff := leftDepth - rightDepth
+        if abs(depthDiff) > 1 {
+            ans = false
+        }
+
+        maxDepth := leftDepth
+        if rightDepth > leftDepth{
+            maxDepth = rightDepth
+        }
+
+        return 1 + maxDepth
+    }
+    findDepth(root)
+    return ans
+}
+
+func abs(a int) int{
+    if a < 0 {
+        return -a
+    }
+    return a
+}
