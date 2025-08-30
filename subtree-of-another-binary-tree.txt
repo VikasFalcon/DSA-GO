@@ -1,0 +1,30 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func isSubtree(root *TreeNode, subRoot *TreeNode) bool {
+    rootHash := serialize(root)
+    subRootHash := serialize(subRoot)
+    
+    return strings.Contains(rootHash,subRootHash)
+}
+
+func serialize(root *TreeNode) string {
+    hash:=""
+    var traversal func(curr *TreeNode) 
+    traversal = func(curr *TreeNode){
+        if curr == nil {
+            hash += "-#"
+            return
+        }
+        hash += "-" + strconv.Itoa(curr.Val)
+        traversal(curr.Left)
+        traversal(curr.Right)
+    }
+    traversal(root)
+    return hash
+}
