@@ -1,0 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func diameterOfBinaryTree(root *TreeNode) int {
+    maxDiameter := 0
+    var findDepth func(curr *TreeNode) int
+    findDepth = func(curr *TreeNode) int {
+        if curr == nil{
+            return 0
+        }
+
+        leftDepth := findDepth(curr.Left) 
+        rightDepth := findDepth(curr.Right)
+
+        currDiameter := leftDepth + rightDepth
+        if currDiameter > maxDiameter {
+            maxDiameter = currDiameter
+        }
+
+        maxDepth := leftDepth
+        if rightDepth > leftDepth{
+            maxDepth = rightDepth
+        }  
+
+        return 1 + maxDepth
+    }
+    findDepth(root)
+
+    return maxDiameter
+}
