@@ -1,0 +1,32 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func goodNodes(root *TreeNode) int {
+    ans := 0
+    var traversal func(curr *TreeNode, maxVal int)
+    traversal = func(curr *TreeNode, maxVal int){
+        if curr.Val >= maxVal{
+            ans++
+        }
+
+        currMax := maxVal
+        if curr.Val > maxVal{
+            currMax = curr.Val
+        }
+        
+        if curr.Left != nil{
+            traversal(curr.Left, currMax)
+        }
+
+        if curr.Right != nil{
+            traversal(curr.Right, currMax)
+        }
+    }
+    traversal(root, int(math.Inf(-1)))
+    return ans
+}
