@@ -1,0 +1,36 @@
+/**
+ * Definition for a Node.
+ * type Node struct {
+ *     Val int
+ *     Left *Node
+ *     Right *Node
+ *     Next *Node
+ * }
+ */
+
+func connect(root *Node) *Node {
+	if root == nil{
+        return root
+    }
+
+    var traversal func(curr *Node)
+    traversal = func(curr *Node){
+        if curr.Left != nil{
+            curr.Left.Next = curr.Right
+        }
+
+        if curr.Right != nil && curr.Next != nil{    
+            curr.Right.Next = curr.Next.Left
+        }    
+
+        if curr.Left != nil{
+            traversal(curr.Left)
+        }
+
+        if curr.Right != nil{
+            traversal(curr.Right)
+        }
+    }
+    traversal(root)
+    return root
+}
