@@ -1,0 +1,34 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
+    var lca *TreeNode
+    var traversal func(curr *TreeNode) int
+    traversal = func(curr *TreeNode) int{
+        count := 0
+        if curr == nil{
+            return 0
+        }
+
+        leftCount := traversal(curr.Left)
+        rightCount := traversal(curr.Right)
+
+        if curr.Val == p.Val || curr.Val == q.Val{
+            count++
+        }
+
+        count = count + leftCount + rightCount
+        if count == 2 && lca ==nil{
+            lca = curr
+        }
+        
+        return count
+    }
+    traversal(root)
+    return lca
+}
