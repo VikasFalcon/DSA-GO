@@ -1,0 +1,30 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func isValidBST(root *TreeNode) bool {
+    var isBST func(curr, low, high *TreeNode) bool
+    isBST = func(curr, low, high *TreeNode) bool{
+        if curr == nil{
+            return true
+        }
+        
+        if low != nil && low.Val >= curr.Val{
+            return false
+        }
+
+        if high != nil && high.Val <= curr.Val{
+            return false
+        }
+
+        leftBST := isBST(curr.Left,low,curr)
+        rightBST := isBST(curr.Right,curr,high)
+
+        return leftBST && rightBST
+    }
+    return isBST(root,nil,nil)
+}
