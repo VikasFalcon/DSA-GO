@@ -1,0 +1,24 @@
+// Top Down approch
+func insertIntoBST(root *TreeNode, val int) *TreeNode {
+    var traversal func(curr **TreeNode)
+    traversal = func(curr **TreeNode) {
+        if *curr == nil {
+            *curr = &TreeNode{
+                Val:   val,
+                Left:  nil,
+                Right: nil,
+            }
+            return
+        }
+
+        if val < (*curr).Val {
+            traversal(&(*curr).Left)
+        } else {
+            traversal(&(*curr).Right)
+        }
+    }
+
+    traversal(&root)
+    return root
+}
+
