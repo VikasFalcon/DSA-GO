@@ -1,0 +1,35 @@
+// Every Binary Search Tree(BST) with In-Order traversal will be in ascending order
+// So as soon as count would be 0, then return ans with curr.Val
+
+
+
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func kthSmallest(root *TreeNode, k int) int {
+    count := k
+    var ans int
+    var traversal func(curr *TreeNode)
+    traversal = func(curr *TreeNode){
+        if curr.Left != nil{
+            traversal(curr.Left)
+        }
+        count--
+        if count == 0{
+            ans = curr.Val
+            return
+        }
+
+        if curr.Right != nil{
+            traversal(curr.Right)
+        }
+        
+    }
+    traversal(root)
+    return ans
+}
