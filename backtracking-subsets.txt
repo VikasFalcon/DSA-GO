@@ -12,3 +12,11 @@ func subsets(nums []int) [][]int {
     backTracking([]int{},0)
     return result
 }
+
+
+// result = append(result, append([]int{}, path...))
+// In Go, slices are reference types, which means:
+// When you do result = append(result, path), you're not saving a snapshot of path.
+// Instead, you're saving a reference to the same underlying array.
+// If path changes later, so will the already-added entries in result.
+// This can cause all subsets in result to end up being the same (the final value of path).
