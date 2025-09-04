@@ -1,0 +1,31 @@
+// Permutations formula = n! 
+// Time Complexity = n! and result stores n times = O(n.n!)
+// Space Complexity = n but if we consider result then O(n.n) = O(n2)
+func permute(nums []int) [][]int {
+	result := [][]int{}
+	var backTracking func(path []int, start int)
+	backTracking = func(path []int, start int) {
+		if len(path) == len(nums) {
+			result = append(result, append([]int{}, path...))
+			return
+		}
+		for i := 0; i < len(nums); i++ {
+			if !includes(path, nums[i]) {
+				path = append(path, nums[i])
+				backTracking(path, i+1)
+				path = path[:len(path)-1]
+			}
+		}
+	}
+	backTracking([]int{}, 0)
+	return result
+}
+
+func includes(slice []int, val int) bool {
+	for _, v := range slice {
+		if v == val {
+			return true
+		}
+	}
+	return false
+}
