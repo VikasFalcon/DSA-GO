@@ -1,0 +1,22 @@
+// Combination formula - n!/k!(n-k)!
+// Time Complexity = O(k*n!/k!(n-k!))
+// Space Complexity = O(k*n!/k!(n-k!)) if we consider result as a space
+// otherwise O(k) would be space complexity
+func combine(n int, k int) [][]int {
+    result := [][]int{}
+    var backTrack func(path []int, start int)
+    backTrack = func(path []int, start int){
+        if len(path) == k {
+            result = append(result,append([]int{},path...))
+            return
+        }
+        
+        for i:=start;i<=n;i++{
+            path = append(path,i)
+            backTrack(path,i+1)
+            path = path[:len(path)-1] 
+        }
+    }
+    backTrack([]int{},1)
+    return result
+}
