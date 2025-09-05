@@ -1,0 +1,19 @@
+// Time Complexity O(k.9!/k!(9-k)!)
+// Space Complexity O(k)
+func combinationSum3(k int, n int) [][]int {
+    result := [][]int{}
+    var backTracking func(path []int, start int, remainingSum int)
+    backTracking = func(path []int, start int, remainingSum int){
+        if remainingSum == 0 && len(path)==k{
+            result = append(result,append([]int{},path...))
+        }
+
+        for i:=start;i<=9;i++{
+            path = append(path,i)
+            backTracking(path,i+1,remainingSum-i)
+            path = path[:len(path)-1]
+        }
+    }
+    backTracking([]int{},1,n)
+    return result
+}
