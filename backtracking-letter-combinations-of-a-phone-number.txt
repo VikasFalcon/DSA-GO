@@ -1,0 +1,36 @@
+// Time Complexity O(n.4^n)
+// Space Complexity O(n) and with result O(n.4^n)
+func letterCombinations(digits string) []string {
+    var result []string
+    if len(digits) <= 0{
+        return result
+    }
+
+    letters := map[byte]string{
+        '2':"abc",
+        '3':"def",
+        '4':"ghi",
+        '5':"jkl",
+        '6':"mno",
+        '7':"pqrs",
+        '8':"tuv",
+        '9':"wxyz",
+    }
+
+    var backTracking func(path []string, start int)
+    backTracking = func(path []string, start int){
+        if len(path) == len(digits){
+            result = append(result,strings.Join(path,""))
+            return
+        }
+
+        choices := letters[digits[start]]
+        for i:=0;i<len(choices);i++{
+            path = append(path,string(choices[i]))
+            backTracking(path,start+1)
+            path = path[:len(path)-1]
+        }
+    }
+    backTracking([]string{},0)
+    return result
+}
