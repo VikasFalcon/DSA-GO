@@ -1,0 +1,25 @@
+// children = n
+// depth = T(Target Sum)/M(minimum value in cadidates)
+// Time Complexity = O(n^(T/M)+1)
+// Space complexity = O(T/M)
+func combinationSum(candidates []int, target int) [][]int {
+	result := [][]int{}
+	var backTracking func(path []int, start int, remainingSum int)
+	backTracking = func(path []int, start int, remainingSum int) {
+		if remainingSum == 0 {
+			result = append(result, append([]int{}, path...))
+		}
+
+		if remainingSum < 0 {
+			return
+		}
+
+		for i := start; i < len(candidates); i++ {
+			path = append(path, candidates[i])
+			backTracking(path, i, remainingSum-candidates[i])
+			path = path[:len(path)-1]
+		}
+	}
+	backTracking([]int{}, 0, target)
+	return result
+}
