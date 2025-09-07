@@ -1,0 +1,55 @@
+// l = grid length or m x n
+// n = word length
+// time complxity = O(l.3^n)  3 = 3 choices(expect previous one)
+// Space complexity = O(n)
+
+func exist(board [][]byte, word string) bool {
+	result := false
+	m := len(board)
+	n := len(board[0])
+
+	var backTracking func(x, y, nextIndex int)
+	backTracking = func(x, y, nextIndex int) {
+		if nextIndex == len(word) {
+			result = true
+			return
+		}
+
+		originalVal := board[x][y]
+
+		// tmp change the value so can't backtrack for previous value
+		board[x][y] = '#'
+		// right side
+		if x < m-1 && board[x+1][y] == word[nextIndex] {
+			backTracking(x+1, y, nextIndex+1) // move to right side
+		}
+
+		// left side
+		if x > 0 && board[x-1][y] == word[nextIndex] {
+			backTracking(x-1, y, nextIndex+1) // move to left side
+		}
+
+		// top side
+		if y > 0 && board[x][y-1] == word[nextIndex] {
+			backTracking(x, y-1, nextIndex+1) // move to top side
+		}
+
+		// bottom side
+		if y < n-1 && board[x][y+1] == word[nextIndex] {
+			backTracking(x, y+1, nextIndex+1) // move to bottom side
+		}
+
+		// If value not matched then restore original value
+		board[x][y] = originalVal
+	}
+
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if board[i][j] == word[0] {
+				// 1 = nextIndex of word
+				backTracking(i, j, 1)
+			}
+		}
+	}
+	return result
+}
