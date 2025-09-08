@@ -1,0 +1,51 @@
+func solveNQueens(n int) [][]string {
+	var board [][]string
+    // fill '.' in all place of board initially
+	for i := 0; i < n; i++ {
+		temp := []string{}
+		for j := 0; j < n; j++ {
+			temp = append(temp, ".")
+		}
+		board = append(board, temp)
+	}
+
+    var result [][]string
+	var backTracking func(row int, colSet, diagonalSet, antiDiagonalSet map[int]bool)
+	backTracking = func(row int, colSet, diagonalSet, antiDiagonalSet map[int]bool) {
+		if row == n {
+            snapshot := make([]string,n)
+            for i := range board{
+                snapshot[i] = strings.Join(board[i],"")
+            }
+
+            result = append(result, snapshot)
+            return
+		}
+
+		for col := 0; col < n; col++ {
+            // If any previos queen already present in row/col/diagonally/antiDiagonally
+            // then prune or backtrack
+			if colSet[col] || diagonalSet[row-col] || antiDiagonalSet[row+col] {
+				continue
+			}
+
+            // Insert 'Q' and update col, diagonal and anti diagonal value
+			board[row][col] = "Q"
+			colSet[col] = true
+			diagonalSet[row-col] = true     // diagonal formula = row-col
+			antiDiagonalSet[row+col] = true // anti-diagonal formula = row+col
+
+			backTracking(row+1, colSet, diagonalSet, antiDiagonalSet)
+
+            // after backtrack remove 'Q', col, diagonal and anti diagonal value
+			board[row][col] = "."
+			delete(colSet, col)
+			delete(diagonalSet, row-col)
+			delete(antiDiagonalSet, row+col)
+		}
+	}
+
+	backTracking(0, make(map[int]bool), make(map[int]bool), make(map[int]bool))
+
+	return result
+}
